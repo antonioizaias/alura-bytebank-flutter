@@ -55,7 +55,7 @@ class _AddContactPageState extends State<AddContactPage> {
                   onPressed: () {
                     final String nome = nomeCtrl.text;
                     final int valor = int.tryParse(valorCtrl.text);
-                    final ContactModel contato = ContactModel(nome, valor);
+                    final ContactModel contato = ContactModel(0, nome, valor);
                     Navigator.pop(context, contato);
                   },
                   child: Text("Enviar"),
