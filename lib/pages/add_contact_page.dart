@@ -1,4 +1,4 @@
-import 'package:alura_bytebank_flutter/data/application_data.dart';
+import 'package:alura_bytebank_flutter/data/dao/contato_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:alura_bytebank_flutter/models/contact_model.dart';
 
@@ -10,6 +10,8 @@ class AddContactPage extends StatefulWidget {
 class _AddContactPageState extends State<AddContactPage> {
   final TextEditingController nomeCtrl = TextEditingController();
   final TextEditingController valorCtrl = TextEditingController();
+
+  final ContatoDao dao = ContatoDao();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class _AddContactPageState extends State<AddContactPage> {
                     final String nome = nomeCtrl.text;
                     final int valor = int.tryParse(valorCtrl.text);
                     final ContactModel contato = ContactModel(0, nome, valor);
-                    write(contato).then((id) => Navigator.pop(context));
+                    dao.write(contato).then((id) => Navigator.pop(context));
                   },
                   child: Text("Enviar"),
                 ),

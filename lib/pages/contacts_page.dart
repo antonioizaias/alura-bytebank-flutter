@@ -1,4 +1,4 @@
-import 'package:alura_bytebank_flutter/data/application_data.dart';
+import 'package:alura_bytebank_flutter/data/dao/contato_dao.dart';
 import 'package:alura_bytebank_flutter/models/contact_model.dart';
 import 'package:flutter/material.dart';
 import 'package:alura_bytebank_flutter/configs/colors_config.dart';
@@ -10,6 +10,8 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
+  final ContatoDao dao = ContatoDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,7 @@ class _ContactsListState extends State<ContactsList> {
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder<List<ContactModel>>(
           initialData: [],
-          future: read(),
+          future: dao.read(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               // Ainda não foi executado
@@ -76,14 +78,15 @@ class _ContactsListState extends State<ContactsList> {
                       ),
                     ),
                   );
+                } else {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final ContactModel contato = contatos[index];
+                      return ContatoItem(contato: contato);
+                    },
+                    itemCount: contatos.length,
+                  );
                 }
-                return ListView.builder(
-                  itemBuilder: (context, index) {
-                    final ContactModel contato = contatos[index];
-                    return ContatoItem(contato: contato);
-                  },
-                  itemCount: contatos.length,
-                );
                 break;
             }
             return Center(
@@ -101,11 +104,13 @@ class _ContactsListState extends State<ContactsList> {
       floatingActionButton: FloatingActionButton(
         tooltip: "Adicionar",
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddContactPage(),
-            ),
-          );
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => AddContactPage(),
+                ),
+              )
+              .then((result) => {setState(() {})});
         },
         child: Icon(Icons.add),
         backgroundColor: ColorsConfig.primary,
