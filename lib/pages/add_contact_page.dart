@@ -1,3 +1,4 @@
+import 'package:alura_bytebank_flutter/data/application_data.dart';
 import 'package:flutter/material.dart';
 import 'package:alura_bytebank_flutter/models/contact_model.dart';
 
@@ -56,7 +57,7 @@ class _AddContactPageState extends State<AddContactPage> {
                     final String nome = nomeCtrl.text;
                     final int valor = int.tryParse(valorCtrl.text);
                     final ContactModel contato = ContactModel(0, nome, valor);
-                    Navigator.pop(context, contato);
+                    write(contato).then((id) => Navigator.pop(context));
                   },
                   child: Text("Enviar"),
                 ),

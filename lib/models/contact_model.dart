@@ -11,6 +11,6 @@ class ContactModel {
 
   @override
   String toString() {
-    return "ID: $id – Nome $nome – Valor $valor";
+    return "Contato de ID: $id, nome $nome e valor $valor";
   }
 }
