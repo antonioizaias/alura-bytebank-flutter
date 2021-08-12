@@ -1,12 +1,12 @@
 import 'package:alura_bytebank_flutter/configs/colors_config.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class DashboardPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(Icons.person, color: ColorsConfig.white),
                       Text(
-                        "Contatos",
+                        "Contacts",
                         style: TextStyle(
                           color: ColorsConfig.white,
                           fontWeight: FontWeight.bold,

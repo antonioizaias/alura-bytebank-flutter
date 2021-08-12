@@ -1,4 +1,4 @@
-import 'package:alura_bytebank_flutter/data/dao/contato_dao.dart';
+import 'package:alura_bytebank_flutter/data/dao/contact_dao.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,7 +8,7 @@ Future<Database> getDatabase() async {
   return openDatabase(
     path,
     onCreate: (db, version) {
-      db.execute(ContatoDao.tableSql);
+      db.execute(ContactDao.tableSql);
     },
     version: 1,
   );
@@ -18,7 +18,7 @@ Future<Database> getDatabase() async {
   //     path,
   //     onCreate: (db, version) {
   //       db.execute(
-  //           'CREATE TABLE contatos(id INTEGER PRIMARY KEY, nome TEXT, valor INTEGER)');
+  //           'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, account_number INTEGER)');
   //     },
   //     version: 1,
   //     // ! Diminuindo a versão do banco, irá limpar todos os dados

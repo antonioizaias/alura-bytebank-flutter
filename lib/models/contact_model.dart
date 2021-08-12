@@ -1,16 +1,16 @@
 class ContactModel {
   final int id;
-  final String nome;
-  final int valor;
+  final String name;
+  final int accountNumber;
 
   const ContactModel(
     this.id,
-    this.nome,
-    this.valor,
+    this.name,
+    this.accountNumber,
   );
 
   @override
   String toString() {
-    return "Contato de ID: $id, nome $nome e valor $valor";
+    return "ID: $id";
   }
 }

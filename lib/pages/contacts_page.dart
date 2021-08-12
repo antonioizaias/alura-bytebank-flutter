@@ -1,4 +1,4 @@
-import 'package:alura_bytebank_flutter/data/dao/contato_dao.dart';
+import 'package:alura_bytebank_flutter/data/dao/contact_dao.dart';
 import 'package:alura_bytebank_flutter/models/contact_model.dart';
 import 'package:flutter/material.dart';
 import 'package:alura_bytebank_flutter/configs/colors_config.dart';
@@ -10,16 +10,16 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final ContatoDao dao = ContatoDao();
+  final ContactDao dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contatos"),
+        title: Text("Contacts"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          tooltip: "Voltar",
+          tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -46,11 +46,14 @@ class _ContactsListState extends State<ContactsList> {
                           ColorsConfig.primary,
                         ),
                       ),
-                      Text(
-                        "Carregando",
-                        style: TextStyle(
-                          color: ColorsConfig.primary,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Text(
+                          "Loading",
+                          style: TextStyle(
+                            color: ColorsConfig.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -63,8 +66,8 @@ class _ContactsListState extends State<ContactsList> {
                 break;
               // Finalizado
               case ConnectionState.done:
-                final List<ContactModel> contatos = snapshot.data;
-                if (contatos.length == 0) {
+                final List<ContactModel> contacts = snapshot.data;
+                if (contacts.length == 0) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
@@ -73,7 +76,7 @@ class _ContactsListState extends State<ContactsList> {
                         height: 35.0,
                         width: double.infinity,
                         child: Center(
-                          child: Text("Não há dados cadastrados."),
+                          child: Text("There is no registered data."),
                         ),
                       ),
                     ),
@@ -81,17 +84,17 @@ class _ContactsListState extends State<ContactsList> {
                 } else {
                   return ListView.builder(
                     itemBuilder: (context, index) {
-                      final ContactModel contato = contatos[index];
-                      return ContatoItem(contato: contato);
+                      final ContactModel contact = contacts[index];
+                      return ContactItem(contact: contact);
                     },
-                    itemCount: contatos.length,
+                    itemCount: contacts.length,
                   );
                 }
                 break;
             }
             return Center(
               child: Text(
-                "Erro desconhecido",
+                "Unknown error.",
                 style: TextStyle(
                   color: ColorsConfig.primary,
                   fontWeight: FontWeight.bold,
@@ -102,7 +105,7 @@ class _ContactsListState extends State<ContactsList> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: "Adicionar",
+        tooltip: "Add",
         onPressed: () {
           Navigator.of(context)
               .push(
@@ -119,11 +122,11 @@ class _ContactsListState extends State<ContactsList> {
   }
 }
 
-class ContatoItem extends StatelessWidget {
-  final ContactModel contato;
+class ContactItem extends StatelessWidget {
+  final ContactModel contact;
 
-  ContatoItem({
-    @required this.contato,
+  ContactItem({
+    @required this.contact,
   });
 
   @override
@@ -133,14 +136,14 @@ class ContatoItem extends StatelessWidget {
       color: ColorsConfig.primary,
       child: ListTile(
         title: Text(
-          contato.nome,
+          contact.name,
           style: TextStyle(
             color: ColorsConfig.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle: Text(
-          contato.valor.toString(),
+          contact.accountNumber.toString(),
           style: TextStyle(
             color: ColorsConfig.white,
           ),

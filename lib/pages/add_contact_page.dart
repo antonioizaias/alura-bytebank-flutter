@@ -1,4 +1,4 @@
-import 'package:alura_bytebank_flutter/data/dao/contato_dao.dart';
+import 'package:alura_bytebank_flutter/data/dao/contact_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:alura_bytebank_flutter/models/contact_model.dart';
 
@@ -8,66 +8,70 @@ class AddContactPage extends StatefulWidget {
 }
 
 class _AddContactPageState extends State<AddContactPage> {
-  final TextEditingController nomeCtrl = TextEditingController();
-  final TextEditingController valorCtrl = TextEditingController();
+  final TextEditingController nameCtrl = TextEditingController();
+  final TextEditingController accountNumberCtrl = TextEditingController();
 
-  final ContatoDao dao = ContatoDao();
+  final ContactDao dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Adicionar"),
+        title: Text("New"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          tooltip: "Voltar",
+          tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextField(
+                  controller: nameCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'Full name',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: TextField(
+                  controller: accountNumberCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'Account number',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final String name = nameCtrl.text;
+                      final int accountNumber =
+                          int.tryParse(accountNumberCtrl.text);
+                      // Esse ID não é levado em consideração, é auto incrementado pelo banco
+                      final ContactModel contact =
+                          ContactModel(0, name, accountNumber);
+                      dao.write(contact).then((id) => Navigator.pop(context));
+                    },
+                    child: Text("Add"),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TextField(
-                controller: nomeCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Nome completo',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: TextField(
-                controller: valorCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Número da conta',
-                ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: SizedBox(
-                width: double.maxFinite,
-                child: ElevatedButton(
-                  onPressed: () {
-                    final String nome = nomeCtrl.text;
-                    final int valor = int.tryParse(valorCtrl.text);
-                    final ContactModel contato = ContactModel(0, nome, valor);
-                    dao.write(contato).then((id) => Navigator.pop(context));
-                  },
-                  child: Text("Enviar"),
-                ),
-              ),
-            )
-          ],
-        ),
-      )),
+      ),
     );
   }
 }
