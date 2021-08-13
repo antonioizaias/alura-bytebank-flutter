@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorsConfig {
-  // Identidade visual
-  static final Color primary = Colors.green[900];
+  static final Color primary = Colors.green;
   static final Color white = Colors.white;
 }
